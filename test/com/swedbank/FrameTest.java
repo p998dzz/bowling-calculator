@@ -19,25 +19,64 @@ public class FrameTest {
     }
 
     @Test
-    public void rollBallInFrame(){
+    public void resultAfterOneHitMatchWhatYouRolled(){
         Frame a = new Frame();
         a.roll(8);
+        assertEquals("8", a.getResult());
     }
 
     @Test
-    public void frameHasNoBalls(){
+    public void frameHasNoBallsWhenRollSumIsLessThan10(){
         Frame a = new Frame();
+        a.roll(5);
+        a.roll(3);
         assertFalse(a.hasBalls());
     }
 
     @Test
-    public void hitStrike(){
-        a.roll(10);
-    }
-
-    @Test
-    public void getResultXafterHittingStrike(){
+    public void resultAfterHittingStrikeIsX(){
+        a = new Frame();
         a.roll(10);
         assertEquals("X",a.getResult());
     }
+
+    @Test
+    public void ballCountAfterStrikeAsFirstIs2()
+    {
+        a.roll(10);
+        assertEquals(2, a.getBallCount());
+    }
+
+    @Test
+    public void hitSpare(){
+        a.roll(5);
+        assertEquals("5", a.getResult());
+        a.roll(5);
+        assertEquals("//", a.getResult());
+    }
+
+    @Test
+    public void hitTwoExtraAfterStrike(){
+        a = new Frame();
+        a.roll(10);
+        assertEquals("X", a.getResult());
+        a.roll(8);
+        assertEquals("8", a.getResult());
+        a.roll(1);
+        assertEquals("1", a.getResult());
+    }
+
+    @Test
+    public void cannotHitThreeExtraAfterStrike(){
+        a = new Frame();
+        a.roll(10);
+        assertEquals("X", a.getResult());
+        a.roll(8);
+        assertEquals("8", a.getResult());
+        a.roll(1);
+        assertEquals("1", a.getResult());
+        a.roll(1);
+        assertNotEquals("1", a.getResult());
+    }
+
 }
